@@ -1,4 +1,4 @@
--- Consulta de agregacao para recomendacao
+-- Consulta de agregação usada para alimentar o cálculo de recomendação.
 SELECT
     v.nome_variante,
     COALESCE(SUM(CASE WHEN e.tipo_evento = 'impressao' THEN 1 ELSE 0 END), 0) AS impressos,
@@ -12,4 +12,3 @@ LEFT JOIN eventos_brutos e
 WHERE v.id_experimento = :id_experimento
 GROUP BY v.nome_variante
 ORDER BY v.nome_variante;
-

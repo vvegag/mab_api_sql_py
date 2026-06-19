@@ -15,7 +15,7 @@ Quero que você gere:
 
 Contexto do case:
 - API de Multi-Armed Bandit com SQL;
-- eventos chegam linha a linha;
+- os eventos chegam linha a linha;
 - a solução persiste evento bruto e agregado diário;
 - a recomendação usa Thompson Sampling com distribuição Beta;
 - a API suporta múltiplas variantes desde o início;
@@ -30,4 +30,3 @@ Quero que a explicação seja clara, profissional e adequada para uma entrevista
 - como a solução pode evoluir para produção.
 
 Se possível, organize a saída em blocos curtos e objetivos, com linguagem natural e pronta para apresentação.
-

@@ -1,5 +1,6 @@
 services:
   banco:
+    # Banco PostgreSQL usado para armazenar eventos, agregados e recomendações.
     image: postgres:16
     container_name: mabandit_postgres
     environment:
@@ -15,6 +16,7 @@ services:
       retries: 10
 
   api:
+    # API FastAPI que ingere eventos e calcula a recomendação.
     build: .
     container_name: mabandit_api
     depends_on:
@@ -28,4 +30,3 @@ services:
       SEED_REPRODUTIBILIDADE: 42
     ports:
       - "8000:8000"
-

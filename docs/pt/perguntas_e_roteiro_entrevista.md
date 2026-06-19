@@ -77,4 +77,3 @@ Com Docker Compose, schema SQL versionado, seed fixa nos testes e documentação
 ## Fechamento sugerido
 
 A proposta entrega uma solução simples de operar, fácil de explicar e forte tecnicamente, com foco em dados confiáveis, decisão estatística e reprodutibilidade.
-

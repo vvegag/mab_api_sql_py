@@ -1,3 +1,4 @@
+-- Schema principal do desafio: experimento, variantes, eventos brutos, agregados e recomendacoes.
 CREATE TABLE IF NOT EXISTS experimentos (
     id_experimento BIGSERIAL PRIMARY KEY,
     codigo_experimento VARCHAR(120) NOT NULL UNIQUE,
@@ -6,6 +7,7 @@ CREATE TABLE IF NOT EXISTS experimentos (
     criado_em TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Variantes concorrentes do experimento, incluindo o controle.
 CREATE TABLE IF NOT EXISTS variantes (
     id_variante BIGSERIAL PRIMARY KEY,
     id_experimento BIGINT NOT NULL,
@@ -17,6 +19,7 @@ CREATE TABLE IF NOT EXISTS variantes (
     CONSTRAINT uq_variante_experimento_nome UNIQUE (id_experimento, nome_variante)
 );
 
+-- Histórico linha a linha dos eventos recebidos pela API.
 CREATE TABLE IF NOT EXISTS eventos_brutos (
     id_evento BIGSERIAL PRIMARY KEY,
     id_experimento BIGINT NOT NULL,
@@ -31,6 +34,7 @@ CREATE TABLE IF NOT EXISTS eventos_brutos (
     CONSTRAINT fk_eventos_variantes FOREIGN KEY (id_variante) REFERENCES variantes(id_variante)
 );
 
+-- Visão consolidada por dia e variante para agilizar a recomendação.
 CREATE TABLE IF NOT EXISTS agregados_diarios (
     id_agregado BIGSERIAL PRIMARY KEY,
     id_experimento BIGINT NOT NULL,
@@ -44,6 +48,7 @@ CREATE TABLE IF NOT EXISTS agregados_diarios (
     CONSTRAINT uq_agregado_diario UNIQUE (id_experimento, id_variante, data_referencia)
 );
 
+-- Registro auditável das alocações calculadas pelo algoritmo.
 CREATE TABLE IF NOT EXISTS recomendacoes_diarias (
     id_recomendacao BIGSERIAL PRIMARY KEY,
     id_experimento BIGINT NOT NULL,
@@ -54,6 +59,7 @@ CREATE TABLE IF NOT EXISTS recomendacoes_diarias (
     CONSTRAINT fk_recomendacoes_experimentos FOREIGN KEY (id_experimento) REFERENCES experimentos(id_experimento)
 );
 
+-- Índices para acelerar os joins e as consultas temporais.
 CREATE INDEX IF NOT EXISTS idx_variantes_experimento ON variantes (id_experimento);
 CREATE INDEX IF NOT EXISTS idx_eventos_experimento_timestamp ON eventos_brutos (id_experimento, timestamp_evento);
 CREATE INDEX IF NOT EXISTS idx_eventos_variante_timestamp ON eventos_brutos (id_variante, timestamp_evento);

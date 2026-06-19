@@ -17,14 +17,15 @@ from mab_api_sql_py.utils.constantes import (
 
 
 def garantir_dados_iniciais(app: FastAPI) -> None:
+    """Cria um experimento padrão para facilitar a primeira execução local."""
     fabrica_banco = app.state.fabrica_banco
     with fabrica_banco.obter_sessao() as sessao:
         existe = sessao.scalar(select(Experimento.id_experimento).limit(1))
         if existe is not None:
             return
 
+        # O seed deixa a aplicação pronta para testar sem cadastrar tudo na mão.
         experimento = obter_ou_criar_experimento(sessao, CODIGO_EXPERIMENTO_PADRAO, NOME_EXPERIMENTO_PADRAO)
         obter_ou_criar_variante(sessao, experimento.id_experimento, NOME_VARIANTE_CONTROLE, eh_controle=True)
         obter_ou_criar_variante(sessao, experimento.id_experimento, NOME_VARIANTE_A, eh_controle=False)
         obter_ou_criar_variante(sessao, experimento.id_experimento, NOME_VARIANTE_B, eh_controle=False)
-

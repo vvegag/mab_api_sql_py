@@ -13,6 +13,7 @@ from mab_api_sql_py.utils.constantes import TIPO_EVENTO_CLIQUE, TIPO_EVENTO_IMPR
 
 
 def obter_ou_criar_experimento(sessao: Session, codigo_experimento: str, nome_experimento: str | None) -> Experimento:
+    """Busca um experimento existente ou cria um novo registro base."""
     experimento = sessao.scalar(select(Experimento).where(Experimento.codigo_experimento == codigo_experimento))
     if experimento:
         return experimento
@@ -31,6 +32,7 @@ def obter_ou_criar_variante(
     nome_variante: str,
     eh_controle: bool = False,
 ) -> Variante:
+    """Busca uma variante existente ou cria uma nova para o experimento."""
     variante = sessao.scalar(
         select(Variante).where(
             Variante.id_experimento == id_experimento,
@@ -55,6 +57,7 @@ def registrar_evento_bruto(
     contexto: dict | None,
     id_evento_externo: str | None,
 ) -> EventoBruto:
+    """Persiste o evento linha a linha para manter rastreabilidade total."""
     evento = EventoBruto(
         id_experimento=id_experimento,
         id_variante=id_variante,
@@ -76,6 +79,7 @@ def atualizar_agregado_diario(
     timestamp_evento: datetime,
     tipo_evento: str,
 ) -> AgregadoDiario:
+    """Atualiza o consolidado do dia para leitura eficiente do bandit."""
     timestamp_evento = normalizar_utc(timestamp_evento)
     data_referencia = timestamp_evento.replace(hour=0, minute=0, second=0, microsecond=0)
     agregado = sessao.scalar(
@@ -110,7 +114,9 @@ def buscar_estatisticas_variantes(
     janela_dias: int,
     data_base: datetime,
 ) -> list[EstatisticaVariante]:
+    """Agrupa cliques e impressões dentro da janela analítica configurada."""
     data_inicio = data_base - timedelta(days=janela_dias)
+    # A query lê o histórico recente e converte os eventos em estatísticas por variante.
     query = text(
         """
         SELECT
@@ -157,6 +163,7 @@ def salvar_recomendacao(
     metodo: str,
     payload_json: dict,
 ):
+    """Grava a recomendação gerada para auditoria e comparação futura."""
     from mab_api_sql_py.banco.modelos import RecomendacaoDiaria
 
     recomendacao = RecomendacaoDiaria(
@@ -171,5 +178,6 @@ def salvar_recomendacao(
 
 
 def listar_variantes(sessao: Session, id_experimento: int) -> list[Variante]:
+    """Lista todas as variantes conhecidas para um experimento."""
     resultado = sessao.scalars(select(Variante).where(Variante.id_experimento == id_experimento).order_by(Variante.nome_variante))
     return list(resultado)
