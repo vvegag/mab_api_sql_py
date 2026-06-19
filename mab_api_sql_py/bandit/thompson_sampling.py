@@ -13,10 +13,12 @@ def calcular_alocacao_thompson(
     alocacao_minima_variante: float,
     seed: int | None = None,
 ) -> list[AlocacaoVariante]:
+    """Calcula a distribuição de tráfego com Thompson Sampling e Beta-Binomial."""
     if not estatisticas:
         return []
 
     if len(estatisticas) == 1:
+        # Com apenas uma variante não há decisão a arbitrar.
         unica = estatisticas[0]
         return [
             AlocacaoVariante(
@@ -29,6 +31,7 @@ def calcular_alocacao_thompson(
             )
         ]
 
+    # Sorteio Monte Carlo para estimar a chance de cada variante vencer.
     rng = np.random.default_rng(seed)
     amostras = np.vstack([rng.beta(item.alpha, item.beta, size=numero_amostras) for item in estatisticas])
     vencedores = np.argmax(amostras, axis=0)
@@ -56,4 +59,5 @@ def calcular_alocacao_thompson(
 
 
 def serializar_alocacoes(alocacoes: list[AlocacaoVariante]) -> list[dict]:
+    """Converte os objetos de alocação em JSON serializável."""
     return [asdict(item) for item in alocacoes]

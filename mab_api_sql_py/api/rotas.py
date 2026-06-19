@@ -22,17 +22,20 @@ roteador_api = APIRouter()
 
 
 def obter_sessao(request: Request):
+    """Abre uma sessão de banco por requisição e garante fechamento seguro."""
     with request.app.state.fabrica_banco.obter_sessao() as sessao:
         yield sessao
 
 
 @roteador_api.get("/saude", response_model=RespostaSaude)
 def saude(request: Request):
+    """Endpoint simples para confirmar que a API e a configuração carregaram."""
     return RespostaSaude(status="ok", banco=request.app.state.configuracao.database_url)
 
 
 @roteador_api.post("/eventos")
 def registrar_evento(evento: EventoEntrada, sessao: Session = Depends(obter_sessao)):
+    """Recebe um evento bruto, salva no banco e atualiza o agregado diário."""
     timestamp_evento = normalizar_utc(evento.timestamp_evento or datetime.now(tz=timezone.utc))
     experimento = obter_ou_criar_experimento(sessao, evento.codigo_experimento, evento.nome_experimento)
     variante = obter_ou_criar_variante(sessao, experimento.id_experimento, evento.nome_variante)
@@ -72,6 +75,7 @@ def recomendacao(
     request: Request,
     sessao: Session = Depends(obter_sessao),
 ):
+    """Calcula a recomendação de tráfego para o experimento informado."""
     experimento = sessao.scalar(select(Experimento).where(Experimento.codigo_experimento == codigo_experimento))
     if experimento is None:
         return RespostaRecomendacao(codigo_experimento=codigo_experimento, janela_analise_dias=request.app.state.configuracao.janela_analise_dias, metodo="thompson_sampling", variantes=[])

@@ -1,32 +1,32 @@
-﻿# Decisoes Arquiteturais
+# Decisões Arquiteturais
 
 ## Objetivo
 
-Documentar as decisoes principais da solucao para facilitar defesa tecnica em entrevista e orientar evolucoes futuras.
+Documentar as decisões principais da solução para facilitar a defesa técnica em entrevista e orientar evoluções futuras.
 
 ## 1. FastAPI
 
-Escolhido por combinar rapidez de entrega, validacao forte, documentação automatica e tipagem clara.
+Escolhido por combinar rapidez de entrega, validação forte, documentação automática e tipagem clara.
 
 ### Ganho
 
 - contrato bem definido;
 - baixo atrito para demonstrar o caso;
-- leitura facil para avaliador tecnico.
+- leitura fácil para avaliador técnico.
 
 ## 2. PostgreSQL
 
-Escolhido como banco principal por ser o padrao natural para SQL analitico e historico temporal.
+Escolhido como banco principal por ser o padrão natural para SQL analítico e histórico temporal.
 
 ### Ganho
 
-- joins e agregacoes simples;
+- joins e agregações simples;
 - integridade referencial;
 - facilidade para evoluir o schema.
 
 ## 3. Eventos brutos + agregados
 
-A solucao guarda as duas camadas porque cada uma resolve um problema diferente.
+A solução guarda as duas camadas porque cada uma resolve um problema diferente.
 
 ### Evento bruto
 
@@ -34,81 +34,81 @@ A solucao guarda as duas camadas porque cada uma resolve um problema diferente.
 - auditoria;
 - reprocessamento futuro.
 
-### Agregado diario
+### Agregado diário
 
-- consulta mais rapida;
-- calculo de recomendacao mais simples;
+- consulta mais rápida;
+- cálculo de recomendação mais simples;
 - menor custo de leitura.
 
 ## 4. Thompson Sampling
 
-Foi escolhido por ser mais aderente ao problema do que um A/B test estatico.
+Foi escolhido por ser mais aderente ao problema do que um A/B test estático.
 
 ### Motivos
 
 - funciona bem com CTR;
-- trata incerteza de forma estatistica;
-- suporta multiplas variantes;
-- tem narrativa forte para negocio e engenharia.
+- trata incerteza de forma estatística;
+- suporta múltiplas variantes;
+- tem narrativa forte para negócio e engenharia.
 
-## 5. Multiplas variantes desde o inicio
+## 5. Múltiplas variantes desde o início
 
-Isso evita retrabalho se a entrevista pedir extensao alem de A/B.
+Isso evita retrabalho se a entrevista pedir extensão além de A/B.
 
 ### Ganho
 
-- arquitetura mais generica;
-- algoritmo ja preparado para N variantes;
+- arquitetura mais genérica;
+- algoritmo já preparado para N variantes;
 - argumento de senioridade mais forte.
 
-## 6. Nomes em portugues
+## 6. Nomes em português
 
-A solucao usa portugues em codigo, docs e pastas para maximizar clareza no seu contexto de apresentacao.
+A solução usa português em código, docs e pastas para maximizar clareza no seu contexto de apresentação.
 
 ### Ganho
 
-- leitura mais rapida para voce;
+- leitura mais rápida para você;
 - narrativa consistente na entrevista;
-- maior facilidade para explicar a solucao de ponta a ponta.
+- maior facilidade para explicar a solução de ponta a ponta.
 
-## 7. Idempotencia simples
+## 7. Idempotência simples
 
-O campo `id_evento_externo` foi previsto para evitar duplicidade quando o produtor de eventos tiver um identificador confiavel.
+O campo `id_evento_externo` foi previsto para evitar duplicidade quando o produtor de eventos tiver um identificador confiável.
 
 ### Ganho
 
-- mais robustez na ingestao;
+- mais robustez na ingestão;
 - bom argumento de engenharia;
-- base para evolucao futura.
+- base para evolução futura.
 
-## 8. Janela analitica configuravel
+## 8. Janela analítica configurável
 
-A recomendacao usa uma janela configuravel de analise.
+A recomendação usa uma janela configurável de análise.
 
 ### Ganho
 
 - permite adaptar sensibilidade temporal;
 - facilita explicar a escolha durante a entrevista;
-- evita rigidez desnecessaria.
+- evita rigidez desnecessária.
 
 ## 9. Docker Compose
 
-Foi adotado para tornar a reproducao da solucao simples no ambiente do avaliador.
+Foi adotado para tornar a reprodução da solução simples no ambiente do avaliador.
 
 ### Ganho
 
 - mesma infraestrutura local para qualquer pessoa;
-- menos dependencia do ambiente da maquina;
+- menos dependência do ambiente da máquina;
 - entrega com cara de produto.
 
-## 10. O que foi evitado de proposito
+## 10. O que foi evitado de propósito
 
 - Kubernetes;
-- cloud provider especifico;
-- streaming distribuido complexo;
-- microservicos;
+- cloud provider específico;
+- streaming distribuído complexo;
+- microserviços;
 - excesso de observabilidade para este escopo.
 
 ### Motivo
 
-O desafio pede clareza, reproducibilidade e decisao estatistica. Complexidade extra sem ganho direto atrapalharia a avaliacao.
+O desafio pede clareza, reprodutibilidade e decisão estatística. Complexidade extra sem ganho direto atrapalharia a avaliação.

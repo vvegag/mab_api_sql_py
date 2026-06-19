@@ -1,29 +1,29 @@
-﻿# API de Otimizacao Multi-Armed Bandit com SQL
+# API de Otimização Multi-Armed Bandit com SQL
 
-Esta solucao foi desenhada como um case de entrevista para receber eventos linha a linha, persistir os dados em SQL, consolidar historico e recomendar a alocacao de trafego do proximo dia com Thompson Sampling.
+Esta solução foi desenhada como um case de entrevista para receber eventos linha a linha, persistir os dados em SQL, consolidar histórico e recomendar a alocação de tráfego do próximo dia com Thompson Sampling.
 
 ## O que esta entrega mostra
 
 - API REST com FastAPI;
-- persistencia em PostgreSQL;
-- eventos brutos e agregados diarios;
-- suporta multiplas variantes desde o inicio;
-- recomendacao estatistica para o dia seguinte;
-- documentacao em portugues com apoio em ingles.
+- persistência em PostgreSQL;
+- eventos brutos e agregados diários;
+- suporte a múltiplas variantes desde o início;
+- recomendação estatística para o dia seguinte;
+- documentação em português.
 
-## Estrutura de alto nivel
+## Estrutura de alto nível
 
-- `POST /eventos`: ingestao de eventos;
-- `GET /recomendacao/{codigo_experimento}`: recomenda alocacao;
+- `POST /eventos`: ingestão de eventos;
+- `GET /recomendacao/{codigo_experimento}`: recomenda a alocação;
 - `GET /saude`: health check.
 
-## Principais decisoes
+## Principais decisões
 
 - evento bruto para auditoria e rastreabilidade;
-- agregado diario para consulta eficiente;
+- agregado diário para consulta eficiente;
 - Thompson Sampling com Beta para CTR;
-- Docker Compose para reproducao simples;
-- nomes e documentacao em portugues para facilitar explicacao.
+- Docker Compose para reprodução simples;
+- nomes e documentação em português para facilitar explicação.
 
 ## Arquivos de apoio para a entrevista
 
@@ -31,8 +31,8 @@ Esta solucao foi desenhada como um case de entrevista para receber eventos linha
 - `docs/pt/decisoes_arquiteturais.md`
 - `docs/pt/arquitetura.md`
 - `docs/pt/payloads.md`
-- `docs/en/architecture.md`
-- `docs/en/payloads.md`
+- `docs/pt/perguntas_e_roteiro_entrevista.md`
+- `docs/pt/prompt_notebooklm.md`
 
 ## Como executar localmente
 
@@ -71,9 +71,9 @@ docker compose up --build
 - incluir dashboards de monitoramento;
 - adicionar particionamento por data;
 - ampliar para receita e eCPM;
-- adicionar fila para ingestao assicrona;
+- adicionar fila para ingestão assíncrona;
 - medir drift e performance do modelo ao longo do tempo.
 
-## Observacao
+## Observação
 
-O foco aqui foi manter a solucao clara, reproduzivel e facil de explicar. A arquitetura esta pronta para evoluir sem precisar reescrever o fluxo central.
+O foco aqui foi manter a solução clara, reproduzível e fácil de explicar. A arquitetura está pronta para evoluir sem precisar reescrever o fluxo central.

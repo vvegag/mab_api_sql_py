@@ -18,10 +18,12 @@ def gerar_recomendacao(
     alocacao_minima_variante: float,
     seed: int,
 ) -> dict:
+    """Gera e persiste a recomendação do próximo dia para um experimento."""
     data_base = datetime.now(tz=timezone.utc)
     estatisticas = buscar_estatisticas_variantes(sessao, id_experimento=id_experimento, janela_dias=janela_dias, data_base=data_base)
 
     if not estatisticas:
+        # Se ainda não houver histórico suficiente, distribuímos o tráfego de forma uniforme.
         variantes = listar_variantes(sessao, id_experimento)
         if not variantes:
             return {
@@ -64,4 +66,3 @@ def gerar_recomendacao(
         payload_json=payload,
     )
     return payload
-

@@ -17,8 +17,7 @@ Campos principais:
 
 Retorna:
 
-- codigo do experimento
+- código do experimento
 - janela analisada
-- metodo utilizado
-- lista de variantes com percentual de trafego
-
+- método utilizado
+- lista de variantes com percentual de tráfego
