@@ -1,0 +1,31 @@
+services:
+  banco:
+    image: postgres:16
+    container_name: mabandit_postgres
+    environment:
+      POSTGRES_USER: bandit
+      POSTGRES_PASSWORD: bandit
+      POSTGRES_DB: bandit_db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bandit -d bandit_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build: .
+    container_name: mabandit_api
+    depends_on:
+      banco:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://bandit:bandit@banco:5432/bandit_db
+      JANELA_ANALISE_DIAS: 7
+      NUMERO_AMOSTRAS_THOMPSON: 5000
+      ALOCACAO_MINIMA_VARIANTE: 0.05
+      SEED_REPRODUTIBILIDADE: 42
+    ports:
+      - "8000:8000"
+
