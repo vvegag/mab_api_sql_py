@@ -13,11 +13,20 @@ Campos principais:
 - `contexto`
 - `id_evento_externo`
 
+### Regras principais
+
+- `codigo_experimento` deve identificar o experimento de forma estável;
+- `nome_variante` não pode estar vazio;
+- `tipo_evento` aceita `impressao` ou `clique`;
+- `timestamp_evento` é opcional, mas não pode estar no futuro;
+- `contexto` é livre e pode carregar dados adicionais do evento;
+- `id_evento_externo` pode ser usado para idempotência.
+
 ## GET /recomendacao/{codigo_experimento}
 
 Retorna:
 
-- código do experimento
-- janela analisada
-- método utilizado
-- lista de variantes com percentual de tráfego
+- código do experimento;
+- janela analisada;
+- método utilizado;
+- lista de variantes com percentual de tráfego.

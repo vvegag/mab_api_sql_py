@@ -6,3 +6,6 @@ __pycache__/
 *.pyo
 *.db
 .env
+docs/pt/perguntas_e_roteiro_entrevista.md
+docs/pt/prompt_notebooklm.md
+docs/pt/roteiro_apresentacao_case.md
