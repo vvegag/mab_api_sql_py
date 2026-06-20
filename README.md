@@ -31,6 +31,7 @@ Esta solução foi desenhada como um case de entrevista para receber eventos lin
 - `docs/pt/arquitetura.md`
 - `docs/pt/decisoes_arquiteturais.md`
 - `docs/pt/payloads.md`
+- `docs/pt/validacao_e_testes.md`
 
 ## Materiais pessoais
 
@@ -56,6 +57,12 @@ docker compose up --build
 ```powershell
 pytest -q
 ```
+
+## Validação e testes
+
+Para um passo a passo completo de execução local, Docker, auditoria SQL e exemplos de verificação, consulte:
+
+- `docs/pt/validacao_e_testes.md`
 
 ## Exemplo de evento
 
