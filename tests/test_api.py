@@ -1,18 +1,12 @@
 from __future__ import annotations
 
-from pathlib import Path
-
 from fastapi.testclient import TestClient
 
 from main import criar_app
 
 
 def test_fluxo_basico_api():
-    database_path = Path(__file__).resolve().parents[1] / "teste_mabandit.db"
-    if database_path.exists():
-        database_path.unlink()
-    database_url = f"sqlite:///{database_path}"
-    app = criar_app(database_url=database_url)
+    app = criar_app()
     cliente = TestClient(app)
 
     resposta_saude = cliente.get("/saude")
@@ -42,6 +36,29 @@ def test_fluxo_basico_api():
             "tipo_evento": "impressao",
         },
     )
+
+    resposta_payload_invalido = cliente.post(
+        "/eventos",
+        json={
+            "codigo_experimento": "   ",
+            "nome_experimento": "Teste CTR",
+            "nome_variante": "controle",
+            "tipo_evento": "impressao",
+        },
+    )
+    assert resposta_payload_invalido.status_code == 422
+
+    resposta_timestamp_futuro = cliente.post(
+        "/eventos",
+        json={
+            "codigo_experimento": "experimento_teste",
+            "nome_experimento": "Teste CTR",
+            "nome_variante": "controle",
+            "tipo_evento": "impressao",
+            "timestamp_evento": "2999-01-01T00:00:00Z",
+        },
+    )
+    assert resposta_timestamp_futuro.status_code == 422
 
     resposta = cliente.get("/recomendacao/experimento_teste")
     assert resposta.status_code == 200
