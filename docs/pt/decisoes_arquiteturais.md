@@ -2,13 +2,13 @@
 
 ## Objetivo
 
-Documentar as decisões principais da solução para facilitar a defesa técnica em entrevista e orientar evoluções futuras.
+Documentar as decisões principais da solução para facilitar a revisão técnica e orientar evoluções futuras.
 
 ## 1. FastAPI
 
 Escolhido por combinar rapidez de entrega, validação forte, documentação automática e tipagem clara.
 
-### Ganho
+### Ganhos
 
 - contrato bem definido;
 - baixo atrito para demonstrar o caso;
@@ -16,9 +16,9 @@ Escolhido por combinar rapidez de entrega, validação forte, documentação aut
 
 ## 2. PostgreSQL
 
-Escolhido como banco principal por ser o padrão natural para SQL analítico e histórico temporal.
+Escolhido como banco principal por ser um padrão natural para SQL analítico e histórico temporal.
 
-### Ganho
+### Ganhos
 
 - joins e agregações simples;
 - integridade referencial;
@@ -53,49 +53,49 @@ Foi escolhido por ser mais aderente ao problema do que um A/B test estático.
 
 ## 5. Múltiplas variantes desde o início
 
-Isso evita retrabalho se a entrevista pedir extensão além de A/B.
+Isso evita retrabalho se a solução precisar ir além de A/B.
 
-### Ganho
+### Ganhos
 
 - arquitetura mais genérica;
 - algoritmo já preparado para N variantes;
-- argumento de senioridade mais forte.
+- argumento técnico mais forte.
 
 ## 6. Nomes em português
 
-A solução usa português em código, docs e pastas para maximizar clareza no seu contexto de apresentação.
+A solução usa português em código, docs e pastas para maximizar clareza no contexto de apresentação.
 
-### Ganho
+### Ganhos
 
-- leitura mais rápida para você;
-- narrativa consistente na entrevista;
+- leitura mais rápida;
+- narrativa consistente;
 - maior facilidade para explicar a solução de ponta a ponta.
 
 ## 7. Idempotência simples
 
 O campo `id_evento_externo` foi previsto para evitar duplicidade quando o produtor de eventos tiver um identificador confiável.
 
-### Ganho
+### Ganhos
 
 - mais robustez na ingestão;
-- bom argumento de engenharia;
-- base para evolução futura.
+- base para evolução futura;
+- melhor controle de duplicidade.
 
 ## 8. Janela analítica configurável
 
 A recomendação usa uma janela configurável de análise.
 
-### Ganho
+### Ganhos
 
 - permite adaptar sensibilidade temporal;
-- facilita explicar a escolha durante a entrevista;
+- facilita explicar a escolha;
 - evita rigidez desnecessária.
 
 ## 9. Docker Compose
 
 Foi adotado para tornar a reprodução da solução simples no ambiente do avaliador.
 
-### Ganho
+### Ganhos
 
 - mesma infraestrutura local para qualquer pessoa;
 - menos dependência do ambiente da máquina;
