@@ -1,6 +1,6 @@
 # API de Otimização Multi-Armed Bandit com SQL
 
-Esta solução foi desenhada como um case de entrevista para receber eventos linha a linha, persistir os dados em SQL, consolidar histórico e recomendar a alocação de tráfego do próximo dia com Thompson Sampling.
+Esta solução foi desenhada como um case para receber eventos linha a linha, persistir os dados em SQL, consolidar histórico e recomendar a alocação de tráfego do próximo dia com Thompson Sampling.
 
 ## O que esta entrega mostra
 
